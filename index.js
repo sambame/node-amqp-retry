@@ -28,7 +28,7 @@ module.exports = function wrapper(parameters, cb) {
 
             if (taskRetryLimit && header.retries >= taskRetryLimit) {
                 // TODO some sort of logging
-                return message.reject(false);
+                return job.reject(false);
             }
 
             header.retries++;
@@ -39,6 +39,7 @@ module.exports = function wrapper(parameters, cb) {
             }, {});
 
             messageOptions.headers = header;
+            console.log('task %s with delay %s', JSON.stringify(message), delay)
             amqpSchedule(job.queue.connection)(deliveryInfo.exchange, deliveryInfo.routingKey, message, delay * 1000, messageOptions);
         };
 
