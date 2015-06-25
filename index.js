@@ -27,7 +27,7 @@ module.exports = function wrapper(parameters, cb) {
             }
 
             if (taskRetryLimit && header.retries >= taskRetryLimit) {
-                // TODO some sort of logging
+                console.log('task %s with delay %s rejected (%s >= %s)', JSON.stringify(message), delay, header.retries, taskRetryLimit)
                 return job.reject(false);
             }
 
